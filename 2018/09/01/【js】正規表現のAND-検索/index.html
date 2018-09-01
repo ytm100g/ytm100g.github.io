@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>mochaにおけるdescribeのベストプラクティス | ytm100g notes</title>
+  <title>【js】正規表現のAND?検索 | ytm100g notes</title>
   <meta name="author" content="ytm100g">
   
   <meta name="description" content="to write my notes">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="mochaにおけるdescribeのベストプラクティス"/>
+  <meta property="og:title" content="【js】正規表現のAND?検索"/>
   <meta property="og:site_name" content="ytm100g notes"/>
 
   
@@ -51,43 +51,20 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2018-08-28T10:06:35.000Z"><a href="/2018/08/28/mochaにおけるdescribeのベストプラクティス/">2018-08-28</a></time>
+        <time datetime="2018-09-01T04:06:57.000Z"><a href="/2018/09/01/【js】正規表現のAND-検索/">2018-09-01</a></time>
       
       
   
-    <h1 class="title">mochaにおけるdescribeのベストプラクティス</h1>
+    <h1 class="title">【js】正規表現のAND?検索</h1>
   
 
     </header>
     <div class="entry">
       
-        <h1 id="mochaのベストプラクティス"><a href="#mochaのベストプラクティス" class="headerlink" title="mochaのベストプラクティス"></a>mochaのベストプラクティス</h1><p>Node.jsのテスティングフレームワークである<a href="https://mochajs.org/" target="_blank" rel="noopener">mocha</a>で困ったことがあったので解決策の覚書  </p>
-<h2 id="起きたこと"><a href="#起きたこと" class="headerlink" title="起きたこと"></a>起きたこと</h2><ul>
-<li>テスト用にデータベースを作って、開発メンバーで共有して使っている</li>
-<li>そのデータベースをいじって色々テストする<ul>
-<li>もちろん他のテストに影響を与えないように初期化しながら使う</li>
-</ul>
-</li>
-<li>あるとき、何もテストが走っていない状態でそのデータベースが初期化されていなかった</li>
-</ul>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><ul>
-<li>テストが終わったあとにデータベースをinitializeできていなかった</li>
-<li><code>beforeEach</code>を使っていたが、<code>after</code>はなかった</li>
-</ul>
-<h2 id="解決策"><a href="#解決策" class="headerlink" title="解決策"></a>解決策</h2><img src="/2018/08/28/mochaにおけるdescribeのベストプラクティス/1535451446370.jpg" title="beforeEach">
-<ul>
-<li><code>beforeEach</code>だけだと<code>it</code>の直前のタイミングでしかinitializeが走らない</li>
-<li>テストが終わっても最後の<code>it</code>のあとにデータベースにレコードが残っちゃう</li>
-<li><p><code>after</code>も組み合わせて<code>describe</code>が終わったら綺麗にしてから帰りましょう、というお話</p>
-</li>
-<li><p>往々にして、テストケースの最後は<em>異常系</em>とかにしてしまう</p>
-<ul>
-<li>データベースに更新がかからないテストケースなので、<code>after</code>しなくても平気な場合が大半</li>
-<li>でも明示的にinitializeして気持ちよくテストできるようにしようね</li>
-</ul>
-</li>
-</ul>
-<p>beforEachのみで<br><em>テストケースの最後に異常系を置いたつもりが正常にデータベースが更新されていてテストが落ちた</em><br>みたいなことが起きると事件になります<br>気をつけましょう(経験談)</p>
+        <p><code>&quot;(23)KANA-BOON 『なんでもねだり』 - YouTube&quot;</code><br>という文字列から<br><code>KANA-BOON 『なんでもねだり』</code><br>だけを切り出したいとき  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; &quot;(23)KANA-BOON 『なんでもねだり』 - YouTube&quot;.replace(/^\([0-9]+\)/, &quot;&quot;).replace(/ - YouTube$/, &quot;&quot;)</span><br><span class="line">&apos;KANA-BOON 『なんでもねだり』&apos;</span><br></pre></td></tr></table></figure>
+<p>こうしていたんだけどなんかダサくて調べてみたら<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; &quot;(23)KANA-BOON 『なんでもねだり』 - YouTube&quot;.replace(/^\([0-9]+\)| - YouTube$/g, &quot;&quot;);</span><br><span class="line">&apos;KANA-BOON 『なんでもねだり』&apos;</span><br></pre></td></tr></table></figure></p>
+<p>こんなこともできるらしい。<br><code>gオプション</code>と<code>|</code>の組み合わせってこんな動きになるんですね。</p>
 
       
     </div>
@@ -97,7 +74,7 @@
         
   
   <div class="tags">
-    <a href="/tags/Node-js/">Node.js</a>
+    <a href="/tags/JavaScript/">JavaScript</a>
   </div>
 
         
