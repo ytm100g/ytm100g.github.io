@@ -52,6 +52,45 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2018-10-27T12:44:02.000Z"><a href="/2018/10/27/【nodeJS】splitした結果をおしゃれに変数へ代入する/">2018-10-27</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2018/10/27/【nodeJS】splitした結果をおしゃれに変数へ代入する/">【nodeJS】splitした結果をおしゃれに変数へ代入する</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="splitした結果をおしゃれに変数へ代入する"><a href="#splitした結果をおしゃれに変数へ代入する" class="headerlink" title="splitした結果をおしゃれに変数へ代入する"></a>splitした結果をおしゃれに変数へ代入する</h1><p>「splitしたやつを配列に入れるのはなんだかなあ」<br>って思うことがあって、調べたら思ったよりおしゃれな書き方があったので備忘録</p>
+<p>まずは<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// ES6以降は構造化による代入が使える</span><br><span class="line">const str = &quot;You are good engineer&quot;;</span><br><span class="line">const [a, b, c, d] = str.split(&quot; &quot;);</span><br><span class="line">console.log(a, b, c, d);</span><br><span class="line"></span><br><span class="line">&gt;&gt; You are good engineer</span><br></pre></td></tr></table></figure></p>
+<p>これ出来るの知らなかったです<br>めちゃくちゃ便利  </p>
+<p>あとはsplit関数の第二引数で数をコントロールしてあげれば完璧かと<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 予期せぬ長さが来るかも</span><br><span class="line">const [e, f] = str.split(&quot; &quot;, 2);</span><br><span class="line">console.log(e, f);</span><br><span class="line"></span><br><span class="line">&gt;&gt; You are</span><br></pre></td></tr></table></figure></p>
+<p>もちろん短ければundifinedで受けてくれます<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 短すぎたら?</span><br><span class="line">const [g, h, i, j, k] = str.split(&quot; &quot;);</span><br><span class="line">console.log(g, h, i, j, k);]</span><br><span class="line"></span><br><span class="line">&gt;&gt; You are good engineer undefined</span><br></pre></td></tr></table></figure></p>
+<p>じゃあこれも出来るんだな？、ってことで試したら出来た<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 連想配列</span><br><span class="line">let obj = &#123;&#125;;</span><br><span class="line">[obj.subject, </span><br><span class="line">    obj.verb, </span><br><span class="line">    obj.complement, </span><br><span class="line">    obj.object] = str.split(&quot; &quot;, 4);</span><br><span class="line">console.log(obj);</span><br><span class="line"></span><br><span class="line">&gt;&gt; &#123; subject: &apos;You&apos;,</span><br><span class="line">   verb: &apos;are&apos;,</span><br><span class="line">   complement: &apos;good&apos;,</span><br><span class="line">   object: &apos;engineer&apos; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>HTTPリクエストの処理とか、文字列で受け取るときに色々使えそう</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2018-09-01T04:06:57.000Z"><a href="/2018/09/01/【js】正規表現のAND-検索/">2018-09-01</a></time>
       
       
