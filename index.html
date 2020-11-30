@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>ytm100g notes</title>
+  <title>ytm100g memo</title>
   <meta name="author" content="ytm100g">
   
-  <meta name="description" content="to write my notes">
+  <meta name="description" content="memo">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="ytm100g notes"/>
+  <meta property="og:site_name" content="ytm100g memo"/>
 
   
     <meta property="og:image" content=""/>
   
 
   <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="ytm100g notes" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="ytm100g memo" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   
@@ -29,7 +29,7 @@
 
 <body>
   <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">ytm100g notes</a></h1>
+  <h1><a href="/">ytm100g memo</a></h1>
   <h2><a href="/"></a></h2>
 </div>
 <nav id="main-nav" class="alignright">
@@ -46,357 +46,6 @@
 </header>
   <div id="content" class="inner">
     <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-12-08T13:15:33.000Z"><a href="/2018/12/08/mocha-chaiで爆速TDD開発【node】/">2018-12-08</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/12/08/mocha-chaiで爆速TDD開発【node】/">mocha/chaiで爆速TDD開発【node】</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="アドベントカレンダーです"><a href="#アドベントカレンダーです" class="headerlink" title="アドベントカレンダーです"></a>アドベントカレンダーです</h1><ul>
-<li>めっちゃ申し訳ないですが、複数のカレンダーに同時に掲載する気まんまんです<ul>
-<li>(まったく申し訳ないと思ってない)</li>
-</ul>
-</li>
-<li>もう年末なんですね</li>
-</ul>
-<h1 id="本題"><a href="#本題" class="headerlink" title="本題"></a>本題</h1><h2 id="テスト駆動開発しようぜ"><a href="#テスト駆動開発しようぜ" class="headerlink" title="テスト駆動開発しようぜ"></a>テスト駆動開発しようぜ</h2><ul>
-<li>テストから書いて実装しようぜってやつです</li>
-<li>いろいろ意見はあると思うけど<ul>
-<li>実装前後構わずテストは書こうぜって意見を持ってる</li>
-</ul>
-</li>
-<li>その上でテスト駆動にしちゃえば要件からズレずに実装できるじゃん<ul>
-<li>そんな気持ちでテスト駆動開発してます</li>
-</ul>
-</li>
-</ul>
-<h2 id="Node-jsで書いたウェブアプリでテスト駆動"><a href="#Node-jsで書いたウェブアプリでテスト駆動" class="headerlink" title="Node.jsで書いたウェブアプリでテスト駆動"></a>Node.jsで書いたウェブアプリでテスト駆動</h2><ul>
-<li>リクエストレスポンスがあるウェブ系の開発でテスト駆動難しそう<ul>
-<li>でもそんなことないよ！</li>
-<li><code>npm install</code>だけで爆速で環境設定できちゃう</li>
-</ul>
-</li>
-</ul>
-<h2 id="環境"><a href="#環境" class="headerlink" title="環境"></a>環境</h2><h3 id="フォルダ構成"><a href="#フォルダ構成" class="headerlink" title="フォルダ構成"></a>フォルダ構成</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">└── dev</span><br><span class="line">    └── ytm-test (npm root)</span><br><span class="line">        ├── index.js (end point)</span><br><span class="line">        ├── package.json</span><br><span class="line">        ├── package-lock.json</span><br><span class="line">        └── test</span><br><span class="line">            └── index.test.js (test code)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>こんな感じでエンドポイントがある階層にtestディレクトリを作ります<ul>
-<li>別にこんな感じにしなくてもいいけど、test配下とrootでファイルが1:1対応させといた方が良い</li>
-</ul>
-</li>
-</ul>
-<h3 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h3><ul>
-<li><p>全部npmで入っちゃう!すごい!</p>
-</li>
-<li><p>テスティングライブラリ</p>
-<ul>
-<li><code>$ npm install chai</code></li>
-<li><a href="https://www.npmjs.com/package/chai" target="_blank" rel="noopener">npmjs.com/chai</a></li>
-<li>アサーションライブラリってやつ<ul>
-<li>テストコードが書くのに特化したメソッドいっぱい持ってる</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>テスティングライブラリのHTTPリクエスト用プラグイン<ul>
-<li><code>$ npm install chai-http</code></li>
-<li><a href="https://www.npmjs.com/package/chai-http" target="_blank" rel="noopener">npmjs.com/chai-http</a></li>
-<li>chaiでhttpリクエスト/レスポンスできるようになるやつ<ul>
-<li>これさえあればエンドポイント叩く系のテストコードはなんでも書ける気がするよ！</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>テスティングフレームワーク</p>
-<ul>
-<li><code>$ npm install mocha</code></li>
-<li><a href="https://www.npmjs.com/package/mocha" target="_blank" rel="noopener">npmjs.com/mocha</a></li>
-<li>テスト結果をまとめてくれるすごいやつ<ul>
-<li><code>chai</code>とかのライブラリが出力したものをヒューマンリーダブルに出力してくれる</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>なんか他にも色々ライブラリやフレームワークはあるよ</p>
-<ul>
-<li>僕が感覚的に書けるのはこの組み合わせ<ul>
-<li>プロジェクトによって違ったりするから選択は難しいよね</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="TDD-テスト駆動開発-を始めるぞ！"><a href="#TDD-テスト駆動開発-を始めるぞ！" class="headerlink" title="TDD(テスト駆動開発)を始めるぞ！"></a>TDD(テスト駆動開発)を始めるぞ！</h2><ul>
-<li>今回は<strong>数字を投げたらそれが10と比較した結果を返してくれるエンドポイント</strong>を作るよ！</li>
-<li>テスト駆動だからテストから書いていく<ul>
-<li>コツは<strong>スペック</strong>を書いていくこと<ul>
-<li>「このエンドポイントはこんな風に動いてほしい！」</li>
-<li>そんな欲望を書く、それだけ</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="dev-ytm-test-test-index-test-js"><a href="#dev-ytm-test-test-index-test-js" class="headerlink" title="./dev/ytm-test/test/index.test.js"></a>./dev/ytm-test/test/index.test.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">const chai = require(&quot;chai&quot;);</span><br><span class="line">const expect = chai.expect;</span><br><span class="line">const chaiHttp = require(&quot;chai-http&quot;);</span><br><span class="line">chai.use(chaiHttp);</span><br><span class="line"></span><br><span class="line">// どんなテストなのかをdescribeで定義</span><br><span class="line">describe(&quot;1. index.jsのスペック一覧&quot;, function()&#123;</span><br><span class="line">  </span><br><span class="line">  // ひとつひとつのテストをitで定義</span><br><span class="line">  // req, resを含むテストではasync/await必須</span><br><span class="line">  it(&quot;1.1 マイナスの値のとき「numberは10以下」を返す&quot;,async function()&#123;</span><br><span class="line">    await chai.request(&quot;localhost:8080&quot;)</span><br><span class="line">      .post(&quot;/&quot;)</span><br><span class="line">      .send(</span><br><span class="line">        &#123;&quot;number&quot;: -1&#125;</span><br><span class="line">      )</span><br><span class="line">      .then(function (res) &#123;</span><br><span class="line">        expect(res).to.have.status(200);</span><br><span class="line">        expect(res.body).to.have.property(&quot;result&quot;, &quot;numberは10以下&quot;);</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;);                                                                            </span><br><span class="line">  it(&quot;1.2 10以下のとき「numberは10以下」を返す&quot;,async function()&#123;</span><br><span class="line">    await chai.request(&quot;localhost:8080&quot;)</span><br><span class="line">      .post(&quot;/&quot;)</span><br><span class="line">      .send(</span><br><span class="line">        &#123;&quot;number&quot;: 10&#125;</span><br><span class="line">      )</span><br><span class="line">      .then(function (res) &#123;</span><br><span class="line">        expect(res).to.have.status(200);</span><br><span class="line">        expect(res.body).to.have.property(&quot;result&quot;, &quot;numberは10以下&quot;);</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">  it(&quot;1.3 10より大きいとき「numberは10より大きい」を返す&quot;,async function()&#123;</span><br><span class="line">    await chai.request(&quot;localhost:8080&quot;)</span><br><span class="line">      .post(&quot;/&quot;)</span><br><span class="line">      .send(</span><br><span class="line">        &#123;&quot;number&quot;: 11&#125;</span><br><span class="line">      )</span><br><span class="line">      .then(function (res) &#123;</span><br><span class="line">        expect(res).to.have.status(200);</span><br><span class="line">        expect(res.body).to.have.property(&quot;result&quot;, &quot;numberは10より大きい&quot;);</span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>ソースとchai/mochaのチュートリアル見ればすぐ書ける</li>
-<li>今回は8080ポートにあるエンドポイントに数字をpostしたら<ul>
-<li>それが10と比べてどんな数字なのかを返すエンドポイントを作るよ！</li>
-</ul>
-</li>
-<li>イメージしやすいように<code>curl</code>を貼っておく</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl localhost:8080  -H &quot;Accept: application/json&quot; -H &quot;Content-type: application/json&quot; -d &apos;&#123;&quot;number&quot;:-1&#125;&apos;</span><br><span class="line">curl localhost:8080  -H &quot;Accept: application/json&quot; -H &quot;Content-type: application/json&quot; -d &apos;&#123;&quot;number&quot;:10&#125;&apos;</span><br><span class="line">curl localhost:8080  -H &quot;Accept: application/json&quot; -H &quot;Content-type: application/json&quot; -d &apos;&#123;&quot;number&quot;:11&#125;&apos;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>./dev/ytm-test/test/index.test.js</code>は上のcurlを<code>chai-http</code>の力を借りてリクエスト</li>
-<li><code>chai-http</code>の力を借りてレスポンスを受け取って<ul>
-<li><code>chai</code>の力を借りてレスポンスと期待値が一緒であることを確認</li>
-</ul>
-</li>
-<li><code>mocha</code>の力を借りて<code>describe</code>と<code>it</code>を使ってヒューマンリーダブルな出力がされるようにしているよ！</li>
-</ul>
-<h2 id="とりあえず実行してみる"><a href="#とりあえず実行してみる" class="headerlink" title="とりあえず実行してみる"></a>とりあえず実行してみる</h2><ul>
-<li>とりあえずエンドポイント作る<ul>
-<li>express使ってテキトーなエンドポイント作ってプロセス起動しとく</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&quot;express&quot;);</span><br><span class="line">const bodyParser = require(&apos;body-parser&apos;);</span><br><span class="line">const app = express();</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123;</span><br><span class="line">      extended: true</span><br><span class="line">&#125;));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line">const server = app.listen(8080, function()&#123;</span><br><span class="line">  console.log(&quot;Port: &quot; + server.address().port);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(&quot;/&quot;, function(req, res)&#123;</span><br><span class="line">  res.json(</span><br><span class="line">    &#123;&quot;result&quot;: &quot;なんもないよ！&quot;&#125;</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>mocha</code>はnpm installでインストールしてるので<code>node_modules</code>以下からに実行が爆速かも</li>
-<li><code>$ ./node_modules/mocha/bin/mocha test/index.test.js</code></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-10-10-0-29 ytm-test]$ ./node_modules/mocha/bin/mocha test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  1. index.jsのスペック一覧</span><br><span class="line">    1) 1.1 マイナスの値のとき「numberは10以下」を返す</span><br><span class="line">    2) 1.2 10以下のとき「numberは10以下」を返す</span><br><span class="line">    3) 1.3 10より大きいとき「numberは10より大きい」を返す</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  0 passing (57ms)</span><br><span class="line">  3 failing</span><br><span class="line"></span><br><span class="line">  1) 1. index.jsのスペック一覧</span><br><span class="line">       1.1 マイナスの値のとき「numberは10以下」を返す:</span><br><span class="line"></span><br><span class="line">      AssertionError: expected &#123; result: &apos;なんもないよ！&apos; &#125; to have property &apos;result&apos; of &apos;numberは10以下&apos;, but got &apos;なんもないよ！&apos;</span><br><span class="line">      + expected - actual</span><br><span class="line"></span><br><span class="line">      -なんもないよ！</span><br><span class="line">      +numberは10以下</span><br><span class="line">      </span><br><span class="line">      at /home/ec2-user/dev/ytm-test/test/index.test.js:19:34</span><br><span class="line">      at &lt;anonymous&gt;</span><br><span class="line">      at process._tickCallback (internal/process/next_tick.js:189:7)</span><br><span class="line"></span><br><span class="line">  2) 1. index.jsのスペック一覧</span><br><span class="line">       1.2 10以下のとき「numberは10以下」を返す:</span><br><span class="line"></span><br><span class="line">      AssertionError: expected &#123; result: &apos;なんもないよ！&apos; &#125; to have property &apos;result&apos; of &apos;numberは10以下&apos;, but got &apos;なんもないよ！&apos;</span><br><span class="line">      + expected - actual</span><br><span class="line"></span><br><span class="line">      -なんもないよ！</span><br><span class="line">      +numberは10以下</span><br><span class="line">      </span><br><span class="line">      at /home/ec2-user/dev/ytm-test/test/index.test.js:30:34</span><br><span class="line">      at &lt;anonymous&gt;</span><br><span class="line">      at process._tickCallback (internal/process/next_tick.js:189:7)</span><br><span class="line"></span><br><span class="line">  3) 1. index.jsのスペック一覧</span><br><span class="line">       1.3 10より大きいとき「numberは10より大きい」を返す:</span><br><span class="line"></span><br><span class="line">      AssertionError: expected &#123; result: &apos;なんもないよ！&apos; &#125; to have property &apos;result&apos; of &apos;numberは10より大きい&apos;, but got &apos;なんもないよ！&apos;</span><br><span class="line">      + expected - actual</span><br><span class="line"></span><br><span class="line">      -なんもないよ！</span><br><span class="line">      +numberは10より大きい</span><br><span class="line">      </span><br><span class="line">      at /home/ec2-user/dev/ytm-test/test/index.test.js:41:34</span><br><span class="line">      at &lt;anonymous&gt;</span><br><span class="line">      at process._tickCallback (internal/process/next_tick.js:189:7)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>スペックを全然満たしてないことがわかる<ul>
-<li>リクエスト受けたらとりあえずjsonでなんもないよ！を返すだけだからね</li>
-</ul>
-</li>
-<li><code>mocha</code>はこんな風に<ul>
-<li>どのテストケースの </li>
-<li>どのテストに</li>
-<li>どうして失敗したのか<ul>
-<li>を綺麗に表示してくれます</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="開発開始"><a href="#開発開始" class="headerlink" title="開発開始"></a>開発開始</h2><ul>
-<li>テストコードが書けたところで<code>index.js</code>がスペックを満たすように書いていきます</li>
-<li>とはいえ簡単なエンドポイントなので一瞬で書いちゃいましょう</li>
-</ul>
-<h3 id="dev-ytm-test-index-js"><a href="#dev-ytm-test-index-js" class="headerlink" title="./dev/ytm-test/index.js"></a>./dev/ytm-test/index.js</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&quot;express&quot;);</span><br><span class="line">const bodyParser = require(&apos;body-parser&apos;);</span><br><span class="line">const app = express();</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123;</span><br><span class="line">      extended: true</span><br><span class="line">&#125;));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line">const server = app.listen(8080, function()&#123;</span><br><span class="line">  console.log(&quot;Port: &quot; + server.address().port);</span><br><span class="line">&#125;);                                                                              </span><br><span class="line"></span><br><span class="line">app.post(&quot;/&quot;, function(req, res)&#123;</span><br><span class="line">  let result;</span><br><span class="line">  if(10 &gt; req.body.number)&#123;</span><br><span class="line">    result = &quot;numberは10以下&quot;;</span><br><span class="line">  &#125;else if(10 &lt; req.body.number)&#123;</span><br><span class="line">    result = &quot;numberは10より大きい&quot;;</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    result = &quot;パラメータが不正&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">  res.json(</span><br><span class="line">    &#123;&quot;result&quot;: result&#125;</span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<ul>
-<li>単純明快ですね<ul>
-<li>受け取った数字をifで評価してresultに結果を代入して返します</li>
-</ul>
-</li>
-<li>さっそくmochaでテストしてみましょう！</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-10-10-0-29 ytm-test]$ ./node_modules/mocha/bin/mocha test/index.test.js </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  1. index.jsのスペック一覧</span><br><span class="line">    ✓ 1.1 マイナスの値のとき「numberは10以下」を返す (40ms)</span><br><span class="line">    1) 1.2 10以下のとき「numberは10以下」を返す</span><br><span class="line">    ✓ 1.3 10より大きいとき「numberは10より大きい」を返す</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  2 passing (57ms)</span><br><span class="line">  1 failing</span><br><span class="line"></span><br><span class="line">  1) 1. index.jsのスペック一覧</span><br><span class="line">       1.2 10以下のとき「numberは10以下」を返す:</span><br><span class="line"></span><br><span class="line">      AssertionError: expected &#123; result: &apos;パラメータが不正&apos; &#125; to have property &apos;result&apos; of &apos;numberは10以下&apos;, but got &apos;パラメータが不正&apos;</span><br><span class="line">      + expected - actual</span><br><span class="line"></span><br><span class="line">      -パラメータが不正</span><br><span class="line">      +numberは10以下</span><br><span class="line">      </span><br><span class="line">      at /home/ec2-user/dev/ytm-test/test/index.test.js:30:34</span><br><span class="line">      at &lt;anonymous&gt;</span><br><span class="line">      at process._tickCallback (internal/process/next_tick.js:189:7)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>あれれ？ケース2が失敗してますね。</li>
-<li><code>./dev/ytm-test/index.js</code>のコードを確認してみましょう</li>
-</ul>
-<h3 id="dev-ytm-test-index-js-L16"><a href="#dev-ytm-test-index-js-L16" class="headerlink" title="./dev/ytm-test/index.js#L16"></a>./dev/ytm-test/index.js#L16</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(10 &gt; req.body.number)&#123;</span><br><span class="line">  result = &quot;numberは10以下&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>めちゃくちゃ初歩的なミス発見</li>
-<li>条件分岐を「10以下」、にしたいのに「10未満」になっていますね<ul>
-<li>これは境界値分析と言って、境界値を調べるテストケースで発見できるバグです</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(10 &gt;= req.body.number)&#123;</span><br><span class="line">  result = &quot;numberは10以下&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>直して再度mochaを実行してみよう</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-10-10-0-29 ytm-test]$ ./node_modules/mocha/bin/mocha test/index.test.js </span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  1. index.jsのスペック一覧</span><br><span class="line">    ✓ 1.1 マイナスの値のとき「numberは10以下」を返す (41ms)</span><br><span class="line">    ✓ 1.2 10以下のとき「numberは10以下」を返す</span><br><span class="line">    ✓ 1.3 10より大きいとき「numberは10より大きい」を返す</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  3 passing (56ms)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>やった！全部のスペックを満たしたぞ！</li>
-</ul>
-<h2 id="別にテスト駆動開発は怖くない"><a href="#別にテスト駆動開発は怖くない" class="headerlink" title="別にテスト駆動開発は怖くない"></a>別にテスト駆動開発は怖くない</h2><ul>
-<li>以上で、テスト駆動開発の爆速チュートリアルは終わりです</li>
-<li>chaiにはexpect以外にも便利なメソッドがたくさん用意されています</li>
-<li>新規開発するならぜひテスト駆動してみてください</li>
-</ul>
-<h2 id="なんでテスト駆動なの？"><a href="#なんでテスト駆動なの？" class="headerlink" title="なんでテスト駆動なの？"></a>なんでテスト駆動なの？</h2><ul>
-<li>僕の意見は<ul>
-<li><strong>自分のコードを責任転嫁から守るためです</strong></li>
-</ul>
-</li>
-<li>複数人で開発してるとき、誰がそのコードを動かなくしたかわからなくなりがちです</li>
-<li>でもコミットごとにテストコードを実行すれば、そのコミットを作ったやつが犯人です</li>
-<li>他人が直接コードをいじってなくても、依存関係にあるファイルをいじったせいで自分のコードが動かなくなることもあります<ul>
-<li>テストコードがあればそんなときも安心</li>
-<li><strong>ちゃんとスペック満たしたコード</strong>であることを胸を張って言える</li>
-<li>動かなくなったのは自分のコードではなく、あなたのコードが悪い</li>
-</ul>
-</li>
-<li>堂々と主張できるように、ちゃんとテストコード書こうな！</li>
-</ul>
-<h2 id="付録"><a href="#付録" class="headerlink" title="付録"></a>付録</h2><ul>
-<li>マークダウンだと全然mochaのヒューマンリーダビリティが伝わらなかったのでスクショつけときます</li>
-</ul>
-<img src="/2018/12/08/mocha-chaiで爆速TDD開発【node】/mocha.png" title="mocha">
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-10-27T12:44:02.000Z"><a href="/2018/10/27/【nodeJS】splitした結果をおしゃれに変数へ代入する/">2018-10-27</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/10/27/【nodeJS】splitした結果をおしゃれに変数へ代入する/">【nodeJS】splitした結果をおしゃれに変数へ代入する</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="splitした結果をおしゃれに変数へ代入する"><a href="#splitした結果をおしゃれに変数へ代入する" class="headerlink" title="splitした結果をおしゃれに変数へ代入する"></a>splitした結果をおしゃれに変数へ代入する</h1><p>「splitしたやつを配列に入れるのはなんだかなあ」<br>って思うことがあって、調べたら思ったよりおしゃれな書き方があったので備忘録</p>
-<p>まずは<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// ES6以降は構造化による代入が使える</span><br><span class="line">const str = &quot;You are good engineer&quot;;</span><br><span class="line">const [a, b, c, d] = str.split(&quot; &quot;);</span><br><span class="line">console.log(a, b, c, d);</span><br><span class="line"></span><br><span class="line">&gt;&gt; You are good engineer</span><br></pre></td></tr></table></figure></p>
-<p>これ出来るの知らなかったです<br>めちゃくちゃ便利  </p>
-<p>あとはsplit関数の第二引数で数をコントロールしてあげれば完璧かと<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 予期せぬ長さが来るかも</span><br><span class="line">const [e, f] = str.split(&quot; &quot;, 2);</span><br><span class="line">console.log(e, f);</span><br><span class="line"></span><br><span class="line">&gt;&gt; You are</span><br></pre></td></tr></table></figure></p>
-<p>もちろん短ければundifinedで受けてくれます<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 短すぎたら?</span><br><span class="line">const [g, h, i, j, k] = str.split(&quot; &quot;);</span><br><span class="line">console.log(g, h, i, j, k);]</span><br><span class="line"></span><br><span class="line">&gt;&gt; You are good engineer undefined</span><br></pre></td></tr></table></figure></p>
-<p>じゃあこれも出来るんだな？、ってことで試したら出来た<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 連想配列</span><br><span class="line">let obj = &#123;&#125;;</span><br><span class="line">[obj.subject, </span><br><span class="line">    obj.verb, </span><br><span class="line">    obj.complement, </span><br><span class="line">    obj.object] = str.split(&quot; &quot;, 4);</span><br><span class="line">console.log(obj);</span><br><span class="line"></span><br><span class="line">&gt;&gt; &#123; subject: &apos;You&apos;,</span><br><span class="line">   verb: &apos;are&apos;,</span><br><span class="line">   complement: &apos;good&apos;,</span><br><span class="line">   object: &apos;engineer&apos; &#125;</span><br></pre></td></tr></table></figure></p>
-<p>HTTPリクエストの処理とか、文字列で受け取るときに色々使えそう</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-09-01T04:06:57.000Z"><a href="/2018/09/01/【js】正規表現のAND-検索/">2018-09-01</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/09/01/【js】正規表現のAND-検索/">【js】正規表現のAND?検索</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p><code>&quot;(23)KANA-BOON 『なんでもねだり』 - YouTube&quot;</code><br>という文字列から<br><code>KANA-BOON 『なんでもねだり』</code><br>だけを切り出したいとき  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ytm100g@DESKTOP:~$ node</span><br><span class="line">&gt; str = &quot;(23)KANA-BOON 『なんでもねだり』 - YouTube&quot;;</span><br><span class="line">&apos;(23)KANA-BOON 『なんでもねだり』 - YouTube&apos;</span><br><span class="line">&gt; str.replace(/^\([0-9]+\)/, &quot;&quot;).replace(/ - YouTube$/, &quot;&quot;);</span><br><span class="line">&apos;KANA-BOON 『なんでもねだり』&apos;</span><br></pre></td></tr></table></figure>
-<p>こうしていたんだけどなんかダサくて調べてみたら<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ytm100g@DESKTOP:~$ node</span><br><span class="line">&gt; str = &quot;(23)KANA-BOON 『なんでもねだり』 - YouTube&quot;;</span><br><span class="line">&apos;(23)KANA-BOON 『なんでもねだり』 - YouTube&apos;</span><br><span class="line">&gt; str.replace(/^\([0-9]+\)| - YouTube$/g, &quot;&quot;);</span><br><span class="line">&apos;KANA-BOON 『なんでもねだり』&apos;</span><br></pre></td></tr></table></figure></p>
-<p>こんなこともできるらしい。<br><code>gオプション</code>と<code>|</code>の組み合わせってこんな動きになるんですね。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2018-08-28T10:06:35.000Z"><a href="/2018/08/28/mochaにおけるdescribeのベストプラクティス/">2018-08-28</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2018/08/28/mochaにおけるdescribeのベストプラクティス/">mochaにおけるdescribeのベストプラクティス</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="mochaのベストプラクティス"><a href="#mochaのベストプラクティス" class="headerlink" title="mochaのベストプラクティス"></a>mochaのベストプラクティス</h1><p>Node.jsのテスティングフレームワークである<a href="https://mochajs.org/" target="_blank" rel="noopener">mocha</a>で困ったことがあったので解決策の覚書  </p>
-<h2 id="起きたこと"><a href="#起きたこと" class="headerlink" title="起きたこと"></a>起きたこと</h2><ul>
-<li>テスト用にデータベースを作って、開発メンバーで共有して使っている</li>
-<li>そのデータベースをいじって色々テストする<ul>
-<li>もちろん他のテストに影響を与えないように初期化しながら使う</li>
-</ul>
-</li>
-<li>あるとき、何もテストが走っていない状態でそのデータベースが初期化されていなかった</li>
-</ul>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><ul>
-<li>テストが終わったあとにデータベースをinitializeできていなかった</li>
-<li><code>beforeEach</code>を使っていたが、<code>after</code>はなかった</li>
-</ul>
-<h2 id="解決策"><a href="#解決策" class="headerlink" title="解決策"></a>解決策</h2><img src="/2018/08/28/mochaにおけるdescribeのベストプラクティス/1535451446370.jpg" title="beforeEach">
-<ul>
-<li><code>beforeEach</code>だけだと<code>it</code>の直前のタイミングでしかinitializeが走らない</li>
-<li>テストが終わっても最後の<code>it</code>のあとにデータベースにレコードが残っちゃう</li>
-<li><p><code>after</code>も組み合わせて<code>describe</code>が終わったら綺麗にしてから帰りましょう、というお話</p>
-</li>
-<li><p>往々にして、テストケースの最後は<em>異常系</em>とかにしてしまう</p>
-<ul>
-<li>データベースに更新がかからないテストケースなので、<code>after</code>しなくても平気な場合が大半</li>
-<li>でも明示的にinitializeして気持ちよくテストできるようにしようね</li>
-</ul>
-</li>
-</ul>
-<p>beforEachのみで<br><em>テストケースの最後に異常系を置いたつもりが正常にデータベースが更新されていてテストが落ちた</em><br>みたいなことが起きると事件になります<br>気をつけましょう(経験談)</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
   <article class="post">
   
   <div class="post-content">
@@ -468,10 +117,6 @@
   <h3 class="title">Tags</h3>
   <ul class="entry">
   
-    <li><a href="/tags/JavaScript/">JavaScript</a><small>1</small></li>
-  
-    <li><a href="/tags/Node-js/">Node.js</a><small>2</small></li>
-  
     <li><a href="/tags/VSCode/">VSCode</a><small>1</small></li>
   
   </ul>
@@ -482,7 +127,7 @@
   </div>
   <footer id="footer" class="inner"><div class="alignleft">
   
-  &copy; 2018 ytm100g
+  &copy; 2020 ytm100g
   
 </div>
 <div class="clearfix"></div></footer>
